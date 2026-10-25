@@ -292,6 +292,40 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
           }
 
+          // 2. Intelligent Multi-line Grouping (Quran / Hadith / Syair Arab + Malay Translation)
+          const lines = para.split('\n');
+          const groups = [];
+          for (let rawLine of lines) {
+            const l = rawLine.trim();
+            if (!l || l === '>') continue;
+            const arC = (l.match(/[\u0600-\u06FF]/g) || []).length;
+            const latC = (l.match(/[a-zA-Z]/g) || []).length;
+            const isLineArabic = arC > 6 && arC > latC;
+            const gtype = isLineArabic ? 'ar' : 'lat';
+            if (groups.length === 0 || groups[groups.length - 1].type !== gtype) {
+              groups.push({ type: gtype, lines: [l] });
+            } else {
+              groups[groups.length - 1].lines.push(l);
+            }
+          }
+
+          if (groups.length > 1) {
+            groups.forEach(g => {
+              const pChild = document.createElement('p');
+              const cleanLines = g.lines.map(l => l.replace(/^[>\s]+/, '').trim()).filter(Boolean).join('<br>');
+              if (g.type === 'ar') {
+                pChild.className = 'arabic-text';
+                pChild.innerHTML = cleanLines.replace(/\*\*(.*?)\*\*/g, '$1');
+              } else {
+                pChild.className = 'quote-highlight-box';
+                const formatted = cleanLines.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                pChild.innerHTML = formatSmartItalicHtml(formatted);
+              }
+              contentBody.appendChild(pChild);
+            });
+            return;
+          }
+
           const p = document.createElement('p');
           
           // Check if contains Arabic
@@ -1544,14 +1578,26 @@ document.addEventListener('DOMContentLoaded', () => {
   // Helper to format text with proper Italic for Latin book titles, keeping Arabic upright
   function formatSmartItalicHtml(str) {
     if (!str) return '';
-    return str.replace(/\*(.*?)\*/g, (match, p1) => {
+    // 1. Format Italic for Book Titles or Arabic terms inside *...*
+    let out = str.replace(/\*(.*?)\*/g, (match, p1) => {
       const arCount = (p1.match(/[\u0600-\u06FF]/g) || []).length;
       const latinCount = (p1.match(/[a-zA-Z]/g) || []).length;
       if (arCount > 0 && arCount >= latinCount) {
-        return `<span class="arabic-ref-title" dir="rtl" style="font-style: normal !important; transform: none !important; font-family: 'Amiri', serif;">${p1}</span>`;
+        return `<span class="arabic-ref-title" dir="rtl">${p1}</span>`;
       }
       return `<em class="book-ref-title">${p1}</em>`;
     });
+
+    // 2. Wrap Quranic Ayah in brackets ﴿...﴾ in golden Amiri khat
+    out = out.replace(/﴿([\u0600-\u06FF\s\.\,\؛\:\!«»\(\)\[\]\-\d]+)﴾/g, '<span class="arabic-inline quran-verse" dir="rtl">﴿$1﴾</span>');
+
+    // 3. Wrap Hadith in quotation brackets «...» containing Arabic in golden Amiri khat
+    out = out.replace(/«([\u0600-\u06FF\s\.\,\؛\:\!\(\)\[\]\-\d]+)»/g, '<span class="arabic-inline hadith-text" dir="rtl">«$1»</span>');
+
+    // 4. Wrap standalone Arabic phrases in parentheses (e.g. (الشرة)) in golden Amiri khat
+    out = out.replace(/\(([\u0600-\u06FF\s\.\,\؛\:\!]{2,})\)/g, '(<span class="arabic-inline" dir="rtl">$1</span>)');
+
+    return out;
   }
 
   // Initial Boot

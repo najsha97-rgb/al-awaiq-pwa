@@ -2746,22 +2746,62 @@ mark.content-search-match.active-match {
   letter-spacing: 0.01em;
 }
 
-/* STRICT ARABIC TYPOGRAPHY INTEGRITY - NEVER ITALICIZED OR SKEWED */
+/* STRICT ARABIC TYPOGRAPHY INTEGRITY - GLORIOUS GOLDEN AMIRI KHAT (IMAGE 2 STANDARD) */
 .arabic-text,
 .quran-ayah,
 .reader-quran-box,
 .ar-quote,
 .prolog-center-arabic,
 .arabic-ref-title,
+.arabic-inline,
+.quran-verse,
+.hadith-text,
 .book-ref-title:lang(ar),
 .book-ref-title[dir="rtl"],
 .fn-card-body .arabic-text,
 .fn-card-body .arabic-ref-title,
+.quote-highlight-box .arabic-text,
+.quote-highlight-box .arabic-inline,
+.quote-highlight-box .quran-ayah,
+.quote-highlight-box .arabic-ref-title,
 [lang="ar"],
 :lang(ar) {
   font-style: normal !important;
   transform: none !important;
   font-family: 'Amiri', 'Traditional Arabic', serif !important;
+  color: var(--gold-light) !important;
+}
+
+[data-theme="light"] .arabic-text,
+[data-theme="light"] .quran-ayah,
+[data-theme="light"] .reader-quran-box,
+[data-theme="light"] .ar-quote,
+[data-theme="light"] .prolog-center-arabic,
+[data-theme="light"] .arabic-ref-title,
+[data-theme="light"] .arabic-inline,
+[data-theme="light"] .quran-verse,
+[data-theme="light"] .hadith-text,
+[data-theme="light"] .book-ref-title:lang(ar),
+[data-theme="light"] .book-ref-title[dir="rtl"],
+[data-theme="light"] .fn-card-body .arabic-text,
+[data-theme="light"] .fn-card-body .arabic-ref-title,
+[data-theme="light"] .quote-highlight-box .arabic-text,
+[data-theme="light"] .quote-highlight-box .arabic-inline,
+[data-theme="light"] .quote-highlight-box .quran-ayah,
+[data-theme="light"] .quote-highlight-box .arabic-ref-title,
+[data-theme="light"] [lang="ar"],
+[data-theme="light"] :lang(ar) {
+  color: #8c6b00 !important;
+}
+
+.arabic-inline,
+.quran-verse,
+.hadith-text {
+  direction: rtl;
+  display: inline;
+  padding: 0 4px;
+  font-size: 1.25rem;
+  line-height: 1.9;
 }
 
 

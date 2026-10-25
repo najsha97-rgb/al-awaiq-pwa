@@ -1,4 +1,4 @@
-const CACHE_NAME = 'alawaiq-v17-poem-insertion-default-styling-20261026';
+const CACHE_NAME = 'alawaiq-v18-hadith-placement-20261026';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

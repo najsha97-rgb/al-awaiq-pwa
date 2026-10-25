@@ -341,7 +341,7 @@ document.addEventListener('DOMContentLoaded', () => {
             p.className = 'internal-subheading-card';
             const cleanHeader = para.replace(/^###\s*/, '').replace(/^\*\*/, '').replace(/\*\*$/, '').trim();
             p.innerHTML = `<span class="subheading-accent" aria-hidden="true"></span><span class="subheading-title">${cleanHeader}</span>`;
-          } else if (para.trim().startsWith('>') || para.startsWith('“') || para.startsWith('"') || para.includes('berkata:') || para.includes('pesan:')) {
+          } else if (para.trim().startsWith('>') || para.startsWith('«')) {
             p.className = 'quote-highlight-box';
             const cleanQuote = para.split('\n').map(l => l.replace(/^[>\s]+/, '').trim()).filter(Boolean).join('<br>');
             p.innerHTML = formatQuoteText(cleanQuote);

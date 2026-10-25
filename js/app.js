@@ -906,13 +906,16 @@ document.addEventListener('DOMContentLoaded', () => {
       return `___HTML_TOKEN_${tokens.length - 1}___`;
     });
 
-    // Highlight potential names (dengan ejaan standard kemas kini)
+    // 1. Convert markdown bold **...** to <strong>...</strong>
+    formatted = formatted.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+    // 2. Highlight potential names (dengan ejaan standard kemas kini)
     const names = [
-      'Imam Hasan al-Banna', 'Hasan al-Banna', 'Sayyid Qutb', 
-      'Umar bin al-Khattab', 'Abu al-Dardak', 'Abu ad-Darda\'', 
-      'Ibn al-Qayyim', 'Ibnu Taimiyah', 'Imam Ahmad', 
-      'Yahya bin Mu\'az', 'Abdullah bin Wahab', 'al-Ma’mun', 
-      'Rasulullah SAW', 'Rasulullah SAW', 'Nabi SAW', 
+      'Imam Hasan al-Banna', 'Hasan al-Banna', 'Sayyid Qutb',
+      'Umar bin al-Khattab', 'Abu al-Dardak', "Abu ad-Darda'",
+      'Ibn al-Qayyim', 'Ibnu Taimiyah', 'Imam Ahmad',
+      "Yahya bin Mu'az", 'Abdullah bin Wahab', 'al-Ma’mun',
+      'Rasulullah SAW', 'Nabi SAW',
       'Iqbal', 'Muhammad Iqbal', 'Hasan al-Hudhaibi'
     ];
     names.forEach(name => {
@@ -920,8 +923,19 @@ document.addEventListener('DOMContentLoaded', () => {
       formatted = formatted.replace(regex, '<span class="tokoh-name">$1</span>');
     });
 
-    // Format Arabic quote brackets « ... » without italics
-    formatted = formatted.replace(/«\s*(.*?)\s*»/g, '<span class="ar-quote" dir="rtl" style="font-style: normal !important; transform: none !important; font-family: \'Amiri\', serif;">« $1 »</span>');
+    // 3. Format quote brackets « ... »
+    // ONLY apply dir="rtl" if content actually contains Arabic!
+    formatted = formatted.replace(/«\s*(.*?)\s*»/g, (match, p1) => {
+      const arCount = (p1.match(/[\u0600-\u06FF]/g) || []).length;
+      const latCount = (p1.match(/[a-zA-Z]/g) || []).length;
+      if (arCount > 0 && arCount >= latCount) {
+        return `<span class="ar-quote" dir="rtl" style="font-style: normal !important; transform: none !important; font-family: 'Amiri', serif;">« ${p1} »</span>`;
+      }
+      return `« ${p1} »`;
+    });
+
+    // 4. Convert markdown italic *...* to <em>...</em> (mencegah asterisks terdedah & memastikan tanda soal ? kekal di akhir ayat)
+    formatted = formatted.replace(/\*(.*?)\*/g, '<em class="book-ref-title">$1</em>');
 
     // Restore protected HTML tags
     return formatted.replace(/___HTML_TOKEN_(\d+)___/g, (_, i) => tokens[parseInt(i, 10)]);
@@ -1556,8 +1570,15 @@ document.addEventListener('DOMContentLoaded', () => {
   function formatHikmahQuote(text) {
     if (!text) return '';
     let formatted = text;
-    // Highlight Arabic quotation brackets « ... » with distinct upright Arabic styling
-    formatted = formatted.replace(/«\s*(.*?)\s*»/g, '<span class="ar-quote" dir="rtl" style="font-style: normal !important; transform: none !important; font-family: \'Amiri\', serif;">« $1 »</span>');
+    // Highlight Arabic quotation brackets « ... » only if it contains Arabic
+    formatted = formatted.replace(/«\s*(.*?)\s*»/g, (match, p1) => {
+      const arCount = (p1.match(/[\u0600-\u06FF]/g) || []).length;
+      const latCount = (p1.match(/[a-zA-Z]/g) || []).length;
+      if (arCount > 0 && arCount >= latCount) {
+        return `<span class="ar-quote" dir="rtl" style="font-style: normal !important; transform: none !important; font-family: 'Amiri', serif;">« ${p1} »</span>`;
+      }
+      return `« ${p1} »`;
+    });
     // Highlight Malay / English quoted speech “...”
     formatted = formatted.replace(/“\s*(.*?)\s*”/g, '<strong style="color: var(--gold-light);">“$1”</strong>');
     return formatted;

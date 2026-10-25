@@ -1,4 +1,4 @@
-const CACHE_NAME = 'alawaiq-v11-lead-in-fix-20261025';
+const CACHE_NAME = 'alawaiq-v12-bidi-question-mark-20261025';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

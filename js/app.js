@@ -326,28 +326,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
           }
 
-          // Handle mixed lines where an introductory phrase is followed by a quote line
-          if (lines.length > 1 && lines.some(l => l.trim().startsWith('>'))) {
-            lines.forEach(rawL => {
-              const l = rawL.trim();
-              if (!l || l === '>') return;
-              const pChild = document.createElement('p');
-              if (l.startsWith('>')) {
-                pChild.className = 'quote-highlight-box';
-                const cleanQ = l.replace(/^[>\s]+/, '').trim();
-                pChild.innerHTML = formatQuoteText(cleanQ);
-              } else {
-                if (l.endsWith(':')) {
-                  pChild.className = 'intro-lead-in';
-                }
-                const bolded = l.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-                pChild.innerHTML = formatSmartItalicHtml(bolded);
-              }
-              contentBody.appendChild(pChild);
-            });
-            return;
-          }
-
           const p = document.createElement('p');
           
           // Check if contains Arabic

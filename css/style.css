@@ -760,8 +760,9 @@ body {
 }
 
 .content-body p.intro-lead-in {
-  text-align: left !important;
-  text-align-last: left !important;
+  text-align: justify;
+  text-align-last: left;
+  -webkit-text-align-last: left;
   margin-bottom: 0.6rem;
 }
 

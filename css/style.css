@@ -756,6 +756,13 @@ body {
 .content-body p {
   margin-bottom: 1.25rem;
   text-align: justify;
+  text-align-last: left;
+}
+
+.content-body p.intro-lead-in {
+  text-align: left !important;
+  text-align-last: left !important;
+  margin-bottom: 0.6rem;
 }
 
 /* Highlight Arabic passages */

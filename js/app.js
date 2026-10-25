@@ -463,20 +463,69 @@ document.addEventListener('DOMContentLoaded', () => {
       const summaryBox = document.createElement('div');
       summaryBox.className = 'summary-container';
 
-      if (sub.summary && sub.summary.trim() !== '') {
-        // Convert simple markdown bullets and bold into HTML
-        const bolded = sub.summary.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-        let htmlContent = formatSmartItalicHtml(bolded)
-          .replace(/\n\*\s/g, '</li><li>')
-          .replace(/\n-\s/g, '</li><li>');
+      const summaryRaw = (sub && sub.summary && sub.summary.trim() !== '') 
+        ? sub.summary 
+        : (ch && ch.summary && ch.summary.trim() !== '' ? ch.summary : '');
 
-        htmlContent = htmlContent.replace(/\n\n/g, '<br><br>');
-        summaryBox.innerHTML = `<div>${htmlContent}</div>`;
+      if (summaryRaw && summaryRaw.trim() !== '') {
+        // Convert markdown bold and italic
+        let html = summaryRaw
+          .replace(/\*\*(.*?)\*\*/g, '<strong style="color: var(--gold-light);">$1</strong>')
+          .replace(/(?<!\*)\*(?!\*)(.*?)(?<!\*)\*(?!\*)/g, '<em>$1</em>');
+
+        // Convert subheaders
+        html = html.replace(/###\s*\*?\((.*?)\)\*?\s*\|\s*(Muka Surat.*?)$/gm, 
+          '<div style="font-size: 0.88rem; color: var(--sapphire-light); margin-bottom: 0.8rem;"><em>($1)</em> • <span style="color: var(--text-muted);">$2</span></div>');
+        html = html.replace(/^###\s*(.*?)$/gm, 
+          '<h4 style="color: var(--sapphire-light); margin-top: 1.2rem; margin-bottom: 0.4rem; font-size: 1.05rem;">$1</h4>');
+
+        // Convert bullet list lines
+        const lines = html.split('\n');
+        let inList = false;
+        let formattedLines = [];
+
+        for (let l of lines) {
+          let tr = l.trim();
+          if (tr.startsWith('* ') || tr.startsWith('- ') || tr.startsWith('• ')) {
+            if (!inList) {
+              formattedLines.push('<ul class="summary-list" style="margin: 0.8rem 0; padding-left: 1.5rem; line-height: 1.8;">');
+              inList = true;
+            }
+            let itemText = tr.replace(/^[\*\-•]\s*/, '');
+            formattedLines.push(`<li style="margin-bottom: 0.6rem;">${itemText}</li>`);
+          } else {
+            if (inList) {
+              formattedLines.push('</ul>');
+              inList = false;
+            }
+            if (tr) {
+              formattedLines.push(`<p style="margin-bottom: 0.75rem; line-height: 1.75;">${tr}</p>`);
+            }
+          }
+        }
+        if (inList) formattedLines.push('</ul>');
+
+        let finalHtml = formattedLines.join('\n');
+
+        summaryBox.innerHTML = `
+          <div class="summary-card" style="background: rgba(190, 18, 60, 0.08); border: 1px solid rgba(251, 113, 133, 0.25); border-radius: 14px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.25);">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; border-bottom: 1px solid rgba(251, 113, 133, 0.2); padding-bottom: 0.85rem;">
+              <span style="font-size: 1.6rem;">⚡</span>
+              <div>
+                <h3 style="margin: 0; color: var(--gold-light); font-size: 1.15rem; font-family: 'Outfit', sans-serif;">INTISARI &amp; FIQH HARAKI: ${ch.title}</h3>
+                <small style="color: var(--sapphire-light); font-weight: 500;">${ch.number} — Fiqh Tarbiah &amp; Radar Halangan Dakwah</small>
+              </div>
+            </div>
+            <div style="color: var(--text-main); font-size: 0.98rem;">
+              ${finalHtml}
+            </div>
+          </div>
+        `;
       } else {
         summaryBox.innerHTML = `
-          <div style="text-align: center; padding: 2rem;">
-            <p style="color: var(--gold-light); font-weight: 600;">Ringkasan Eksklusif Sedang Dikemas Kini</p>
-            <p style="color: var(--text-muted); font-size: 0.9rem;">Sahabat boleh meneliti versi lengkap (Layer 1) sementara ringkasan dimantapkan sepenuhnya.</p>
+          <div style="text-align: center; padding: 2.5rem 1rem;">
+            <p style="color: var(--gold-light); font-weight: 600; font-size: 1.1rem;">⚡ Ringkasan Eksklusif Sedang Dikemas Kini</p>
+            <p style="color: var(--text-muted); font-size: 0.92rem; margin-top: 0.5rem;">Sahabat boleh meneliti versi penuh (Layer 1) sementara intisari dimantapkan sepenuhnya.</p>
           </div>
         `;
       }
@@ -1242,11 +1291,11 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
       <div class="hikmah-filter-chips" id="hikmahFilterChips">
         <button class="hikmah-chip-btn ${activeHikmahCategory === 'all' ? 'active' : ''}" data-cat="all">Semua (${allHikmahQuotes.length})</button>
-        <button class="hikmah-chip-btn ${activeHikmahCategory === 'salaf' ? 'active' : ''}" data-cat="salaf">Ulama & Salaf</button>
-        <button class="hikmah-chip-btn ${activeHikmahCategory === 'sahabat' ? 'active' : ''}" data-cat="sahabat">Sahabat & Khulafa' RA</button>
+        <button class="hikmah-chip-btn ${activeHikmahCategory === 'hadis' ? 'active' : ''}" data-cat="hadis">Hadis Nabi SAW</button>
+        <button class="hikmah-chip-btn ${activeHikmahCategory === 'sahabat' ? 'active' : ''}" data-cat="sahabat">Sahabat & Khulafa'</button>
         <button class="hikmah-chip-btn ${activeHikmahCategory === 'rasyid' ? 'active' : ''}" data-cat="rasyid">Syeikh Ar-Rasyid</button>
-        <button class="hikmah-chip-btn ${activeHikmahCategory === 'banna' ? 'active' : ''}" data-cat="banna">Imam Hasan Al-Banna</button>
-        <button class="hikmah-chip-btn ${activeHikmahCategory === 'iqbal' ? 'active' : ''}" data-cat="iqbal">Pujangga Iqbal</button>
+        <button class="hikmah-chip-btn ${activeHikmahCategory === 'salaf' ? 'active' : ''}" data-cat="salaf">Ulama & Salaf</button>
+        <button class="hikmah-chip-btn ${activeHikmahCategory === 'syair' ? 'active' : ''}" data-cat="syair">Syair Hikmah</button>
       </div>
     `;
     wrap.appendChild(toolbarEl);
@@ -1361,16 +1410,16 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       // 2. Category match
-      if (activeHikmahCategory === 'sahabat') {
+      if (activeHikmahCategory === 'hadis') {
+        return item.category === 'hadis';
+      } else if (activeHikmahCategory === 'sahabat') {
         return item.category === 'sahabat';
-      } else if (activeHikmahCategory === 'banna') {
-        return item.category === 'banna';
-      } else if (activeHikmahCategory === 'iqbal') {
-        return item.category === 'iqbal';
-      } else if (activeHikmahCategory === 'salaf') {
-        return item.category === 'salaf';
       } else if (activeHikmahCategory === 'rasyid') {
         return item.category === 'rasyid';
+      } else if (activeHikmahCategory === 'salaf') {
+        return item.category === 'salaf';
+      } else if (activeHikmahCategory === 'syair') {
+        return item.category === 'syair';
       }
 
       return true; // 'all'
@@ -1461,7 +1510,7 @@ document.addEventListener('DOMContentLoaded', () => {
       `📚 Sumber: ${item.chapterNumber} — ${item.chapterTitle}\n` +
       `📑 Topik: ${item.subtopicTitle}\n` +
       `🌟 Kitab Al-Awaiq — Syeikh Muhammad Ahmad Ar-Rasyid\n` +
-      `🌐 https://najsha97-rgb.github.io/al-masar-pwa/`;
+      `🌐 https://najsha97-rgb.github.io/al-awaiq-pwa/`;
 
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(textToCopy).then(() => {

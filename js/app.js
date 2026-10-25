@@ -301,15 +301,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
           if (isMainlyArabic) {
             p.className = 'arabic-text';
-            const cleanText = para.replace(/^[>\s]+/, '');
-            p.innerHTML = cleanText;
+            const cleanText = para.split('\n').map(l => l.replace(/^[>\s]+/, '').trim()).filter(Boolean).join('<br>');
+            p.innerHTML = cleanText.replace(/\*\*(.*?)\*\*/g, '$1');
           } else if (para.startsWith('### ') || (para.startsWith('**') && para.endsWith('**') && !para.includes('\n') && para.length < 130)) {
             p.className = 'internal-subheading-card';
             const cleanHeader = para.replace(/^###\s*/, '').replace(/^\*\*/, '').replace(/\*\*$/, '').trim();
             p.innerHTML = `<span class="subheading-accent" aria-hidden="true"></span><span class="subheading-title">${cleanHeader}</span>`;
-          } else if (para.startsWith('“') || para.startsWith('"') || para.includes('berkata:') || para.includes('pesan:')) {
+          } else if (para.trim().startsWith('>') || para.startsWith('“') || para.startsWith('"') || para.includes('berkata:') || para.includes('pesan:')) {
             p.className = 'quote-highlight-box';
-            p.innerHTML = formatQuoteText(para);
+            const cleanQuote = para.split('\n').map(l => l.replace(/^[>\s]+/, '').trim()).filter(Boolean).join('<br>');
+            p.innerHTML = formatQuoteText(cleanQuote);
           } else {
             // Check for numbered list item (e.g. 1. **Dua Peringkat...:** Penjelasan...)
             const numMatch = para.match(/^(\d+)\.\s+\*\*(.*?)\*\*:?\s*(.*)$/);

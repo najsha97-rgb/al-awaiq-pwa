@@ -1,4 +1,4 @@
-const CACHE_NAME = 'alawaiq-v3-clean-subtopics-20261025';
+const CACHE_NAME = 'alawaiq-v4-kamal-quote-clean-20261025';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

@@ -913,7 +913,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // 4. Convert markdown italic *...* to <em>...</em> (mencegah asterisks terdedah & memastikan tanda soal ? kekal di akhir ayat)
-    formatted = formatted.replace(/\*(.*?)\*/g, '<em class="book-ref-title">$1</em>');
+    formatted = formatted.replace(/\*(.*?)\*/g, '<em>$1</em>');
 
     // Restore protected HTML tags
     return formatted.replace(/___HTML_TOKEN_(\d+)___/g, (_, i) => tokens[parseInt(i, 10)]);
@@ -1610,7 +1610,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (arCount > 0 && arCount >= latinCount) {
         return `<span class="arabic-ref-title" dir="rtl">${p1}</span>`;
       }
-      return `<em class="book-ref-title">${p1}</em>`;
+      return `<em>${p1}</em>`;
     });
 
     // 2. Wrap Quranic Ayah in brackets ﴿...﴾ in golden Amiri khat

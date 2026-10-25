@@ -1,4 +1,4 @@
-const CACHE_NAME = 'alawaiq-v16-default-font-color-paragraphs-20261025';
+const CACHE_NAME = 'alawaiq-v17-poem-insertion-default-styling-20261026';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

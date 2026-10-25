@@ -3066,3 +3066,35 @@ textarea,
   -ms-user-select: text !important;
   user-select: text !important;
 }
+
+
+/* Explicit Default Styling for Quotes & Poetry Translations */
+.quote-highlight-box {
+  background: rgba(16, 185, 129, 0.08);
+  border-left: 4px solid var(--emerald-primary);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 1rem 1.4rem;
+  margin: 1.5rem 0;
+  font-style: italic !important;
+  color: var(--text-main) !important;
+  font-family: inherit !important;
+}
+
+.quote-highlight-box em,
+.quote-highlight-box .book-ref-title {
+  color: var(--text-main) !important;
+  font-style: italic !important;
+  font-weight: 400 !important;
+  transform: none !important;
+  display: inline !important;
+  font-family: inherit !important;
+  letter-spacing: normal !important;
+}
+
+[data-theme="light"] .quote-highlight-box,
+[data-theme="light"] .quote-highlight-box em,
+[data-theme="light"] .quote-highlight-box .book-ref-title {
+  color: var(--text-main) !important;
+  transform: none !important;
+  font-family: inherit !important;
+}

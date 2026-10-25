@@ -1,4 +1,4 @@
-const CACHE_NAME = 'alawaiq-v13-restore-unified-poetry-20261025';
+const CACHE_NAME = 'alawaiq-v14-remove-unwanted-arabic-box-20261025';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

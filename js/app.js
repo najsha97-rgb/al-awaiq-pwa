@@ -525,6 +525,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         for (let l of lines) {
           let tr = l.trim();
+          // Abaikan sebarang tanda pemisah --- agar ringkasan bersih dan 'clear'
+          if (!tr || tr === '---' || tr === '–' || tr === '—' || tr.startsWith('---') || /^[-_–—\s]{3,}$/.test(tr)) {
+            continue;
+          }
           if (tr.startsWith('* ') || tr.startsWith('- ') || tr.startsWith('• ')) {
             if (!inList) {
               formattedLines.push('<ul class="summary-list" style="margin: 0.8rem 0; padding-left: 1.5rem; line-height: 1.8;">');

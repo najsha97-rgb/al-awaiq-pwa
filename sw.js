@@ -1,4 +1,4 @@
-const CACHE_NAME = 'alawaiq-v34-spelling-hanyasanya-20261027';
+const CACHE_NAME = 'alawaiq-v35-combine-p3p4-bab3sub3-20261027';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

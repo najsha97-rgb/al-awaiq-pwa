@@ -672,7 +672,21 @@ document.addEventListener('DOMContentLoaded', () => {
           if (!tr || tr === '---' || tr === '–' || tr === '—' || tr.startsWith('---') || /^[-_–—\s]{3,}$/.test(tr)) {
             continue;
           }
-          if (tr.startsWith('* ') || tr.startsWith('- ') || tr.startsWith('• ')) {
+          // Handle Arabic Blockquote (Mutiara Kata Hikmah) in Amiri Gold
+          if (tr.startsWith('&gt;') || tr.startsWith('>')) {
+            if (inList) {
+              formattedLines.push('</ul>');
+              inList = false;
+            }
+            let cleanQuote = tr.replace(/^(&gt;|>)\s*/, '').trim();
+            // Remove any <strong> wrapping if it wraps entire quote to keep font biasa
+            cleanQuote = cleanQuote.replace(/^<strong[^>]*>(.*)<\/strong>$/i, '$1');
+            formattedLines.push(`
+              <div class="summary-arabic-quote-box" dir="rtl">
+                <span class="arabic-text-amiri-gold" dir="rtl">${cleanQuote}</span>
+              </div>
+            `);
+          } else if (tr.startsWith('* ') || tr.startsWith('- ') || tr.startsWith('• ')) {
             if (!inList) {
               formattedLines.push('<ul class="summary-list" style="margin: 0.8rem 0; padding-left: 1.5rem; line-height: 1.8;">');
               inList = true;
@@ -685,7 +699,17 @@ document.addEventListener('DOMContentLoaded', () => {
               inList = false;
             }
             if (tr) {
-              formattedLines.push(`<p style="margin-bottom: 0.75rem; line-height: 1.75;">${tr}</p>`);
+              // Check if standalone Arabic line
+              const arChars = (tr.match(/[\u0600-\u06FF]/g) || []).length;
+              if (arChars > 8 && arChars >= (tr.match(/[a-zA-Z]/g) || []).length) {
+                formattedLines.push(`
+                  <div class="summary-arabic-quote-box" dir="rtl">
+                    <span class="arabic-text-amiri-gold" dir="rtl">${tr}</span>
+                  </div>
+                `);
+              } else {
+                formattedLines.push(`<p style="margin-bottom: 0.75rem; line-height: 1.75;">${tr}</p>`);
+              }
             }
           }
         }

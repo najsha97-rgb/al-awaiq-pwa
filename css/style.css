@@ -2777,6 +2777,7 @@ mark.content-search-match.active-match {
   font-style: normal !important;
   transform: none !important;
   font-family: 'Amiri', 'Traditional Arabic', serif !important;
+  font-weight: 400 !important;
   color: var(--gold-light) !important;
 }
 
@@ -3432,4 +3433,45 @@ textarea,
 
 [data-theme="light"] .btn-modal-ringkasan .ch-modal-btn-title {
   color: #b45309;
+}
+
+
+/* ==========================================================================
+   AMIRI GOLD STANDARD - ARABIC TYPOGRAPHY (FONT BIASA REGULAR 400)
+   ========================================================================== */
+.summary-arabic-quote-box {
+  background: rgba(212, 175, 55, 0.08) !important;
+  border: 1px solid rgba(212, 175, 55, 0.35) !important;
+  border-right: 4px solid var(--gold-primary, #d4af37) !important;
+  border-radius: 10px !important;
+  padding: 0.9rem 1.35rem !important;
+  margin: 0.9rem 0 1.1rem 0 !important;
+  text-align: right !important;
+  direction: rtl !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15) !important;
+}
+
+.arabic-text-amiri-gold,
+.summary-arabic-quote-box .arabic-text-amiri-gold {
+  font-family: 'Amiri', 'Traditional Arabic', serif !important;
+  font-size: 1.45rem !important;
+  font-weight: 400 !important; /* Font biasa tidak tebal supaya tasykil/baris jelas */
+  line-height: 2.2 !important;
+  color: var(--gold-light, #f5c542) !important;
+  letter-spacing: normal !important;
+  direction: rtl !important;
+  text-align: right !important;
+  display: block !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25) !important;
+}
+
+[data-theme="light"] .summary-arabic-quote-box {
+  background: rgba(212, 175, 55, 0.07) !important;
+  border-color: rgba(180, 140, 20, 0.35) !important;
+  border-right-color: #b38600 !important;
+}
+
+[data-theme="light"] .arabic-text-amiri-gold,
+[data-theme="light"] .summary-arabic-quote-box .arabic-text-amiri-gold {
+  color: #8c6b00 !important;
 }

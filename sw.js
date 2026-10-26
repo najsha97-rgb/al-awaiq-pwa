@@ -1,4 +1,4 @@
-const CACHE_NAME = 'alawaiq-v26-mutiara-kata-hikmah-20261027';
+const CACHE_NAME = 'alawaiq-v27-amiri-gold-font-20261027';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'alawaiq-v25-master-enrichment-20261026';
+const CACHE_NAME = 'alawaiq-v26-mutiara-kata-hikmah-20261027';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

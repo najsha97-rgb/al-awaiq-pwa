@@ -2,3 +2,8 @@ __pycache__/
 *.pyc
 .DS_Store
 Thumbs.db
+
+# Sekat fail dokumen bercetak daripada dimuat naik ke web awam
+pdf/
+*.pdf
+*.docx

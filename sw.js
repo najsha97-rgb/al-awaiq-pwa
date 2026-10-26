@@ -1,4 +1,4 @@
-const CACHE_NAME = 'alawaiq-v36-combine-p3p4-bab4sub1-20261027';
+const CACHE_NAME = 'alawaiq-v37-stitch-all-split-paragraphs-20261027';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

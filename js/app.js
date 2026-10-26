@@ -1819,6 +1819,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Helper to format text with proper Italic for Latin book titles, keeping Arabic upright
   function formatSmartItalicHtml(str) {
     if (!str) return '';
+    // Strip unwanted stray blockquote '>' after colons or linebreaks
+    str = str.replace(/:\s*>\s*/g, ': ').replace(/\n>\s*/g, '\n');
     // 1. Format Italic for Book Titles or Arabic terms inside *...*
     let out = str.replace(/\*(.*?)\*/g, (match, p1) => {
       const arCount = (p1.match(/[\u0600-\u06FF]/g) || []).length;

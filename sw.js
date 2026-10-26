@@ -1,4 +1,4 @@
-const CACHE_NAME = 'alawaiq-v23-chapter-mode-options-20261026';
+const CACHE_NAME = 'alawaiq-v24-complete-fiqh-haraki-20261026';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

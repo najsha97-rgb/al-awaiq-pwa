@@ -12,7 +12,7 @@
   <link rel="icon" type="image/jpeg" href="./alawaiq_islamic_icon.jpg">
   <link rel="apple-touch-icon" href="./alawaiq_islamic_icon.jpg">
   <link rel="manifest" href="./manifest.json">
-  <link rel="stylesheet" href="./css/style.css?v=20261026_v20">
+  <link rel="stylesheet" href="./css/style.css?v=20261026_v23_opt">
 
   <!-- Google Fonts: Premium Manuscript Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -306,10 +306,22 @@
         <!-- Chapter & Subtopic Header -->
         <div class="chapter-heading-banner">
           <div class="ch-badge-meta">
-            <span class="ch-pill" id="chBadgePill">MUKADIMAH</span>
+            <button class="ch-pill" id="chBadgePill" title="Klik untuk pilih pilihan versi bacaan bab ini (Versi Penuh atau Ringkasan)">MUKADIMAH</button>
             <span class="ch-ar-title" id="chArabicTitle" style="display: none;"></span>
           </div>
           <h2 class="subtopic-main-title" id="subtopicMainTitle">Memuatkan kandungan...</h2>
+
+          <!-- Interactive Mode Switcher on Chapter Title -->
+          <div class="chapter-mode-tabs" id="chapterModeTabs" role="tablist" aria-label="Mod Bacaan Bab">
+            <button class="ch-mode-tab active" id="btnChModeLengkap" role="tab" aria-selected="true" title="Buka Versi Penuh Bab Ini">
+              <span class="mode-icon">📖</span>
+              <span class="mode-label">Versi Penuh</span>
+            </button>
+            <button class="ch-mode-tab" id="btnChModeRingkasan" role="tab" aria-selected="false" title="Buka Ringkasan &amp; Fiqh Haraki Bab Ini">
+              <span class="mode-icon">⚡</span>
+              <span class="mode-label">Ringkasan Bab</span>
+            </button>
+          </div>
         </div>
 
         <!-- Sticky Reading Toolbar -->
@@ -361,6 +373,43 @@
     </div>
   </div>
 
+  <!-- ================= CHAPTER OPTION MODAL ================= -->
+  <div class="chapter-select-overlay" id="chapterSelectModal" style="display: none;">
+    <div class="chapter-select-modal-box">
+      <div class="ch-modal-header">
+        <div class="ch-modal-badge" id="chModalBadge">BAB 1</div>
+        <button class="icon-btn ch-modal-close" id="btnCloseChModal" aria-label="Tutup">✕</button>
+      </div>
+      <h3 class="ch-modal-title" id="chModalTitle">KELOMPOK SEHATI SEJIWA</h3>
+      <div class="ch-modal-arabic" id="chModalArabic">زُمْرَةُ القَلْبِ الوَاحِدِ</div>
+      <p class="ch-modal-desc">Sila pilih mod bacaan yang anda inginkan untuk bab ini:</p>
+      
+      <div class="ch-modal-actions">
+        <button class="ch-modal-btn btn-modal-lengkap" id="btnModalLengkap" type="button">
+          <div class="ch-modal-btn-icon">📖</div>
+          <div class="ch-modal-btn-text">
+            <div class="ch-modal-btn-title">Versi Penuh (Terjemahan Lengkap)</div>
+            <div class="ch-modal-btn-sub">Teks terjemahan lengkap dengan ayat al-Quran, hadis, athar, dan nota kaki rujukan</div>
+          </div>
+        </button>
+
+        <button class="ch-modal-btn btn-modal-ringkasan" id="btnModalRingkasan" type="button">
+          <div class="ch-modal-btn-icon">⚡</div>
+          <div class="ch-modal-btn-text">
+            <div class="ch-modal-btn-title">Ringkasan (Intisari &amp; Fiqh Haraki)</div>
+            <div class="ch-modal-btn-sub">Intipati padat, falsafah tarbiah, dan radar pengesan halangan dakwah</div>
+          </div>
+        </button>
+      </div>
+
+      <div class="ch-modal-footer">
+        <button class="ch-modal-subtopics-btn" id="btnModalExpandSubtopics" type="button">
+          <span>📑</span> <span>Lihat Senarai Subtopik Bab</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Toast Notification -->
   <div class="toast-notice" id="toastNotice">
     <span id="toastIcon">ℹ️</span>
@@ -368,10 +417,10 @@
   </div>
 
   <!-- Data Scripts (Offline Direct Access) -->
-  <script src="./data/alawaiq_quotes.js?v=20261026_v22_fn211"></script>
-  <script src="./data/alawaiq_data.js?v=20261026_v22_fn211"></script>
+  <script src="./data/alawaiq_quotes.js?v=20261026_v23_opt"></script>
+  <script src="./data/alawaiq_data.js?v=20261026_v23_opt"></script>
   <!-- Application Core Script -->
-  <script src="./js/app.js?v=20261026_v22_fn211"></script>
+  <script src="./js/app.js?v=20261026_v23_opt"></script>
 
 </body>
 </html>

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'alawaiq-v22-canonical-211-footnotes-20261026';
+const CACHE_NAME = 'alawaiq-v23-chapter-mode-options-20261026';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

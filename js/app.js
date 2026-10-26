@@ -42,6 +42,101 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // DOM Elements
   const chapterNavList = document.getElementById('chapterNavList');
+  const chapterSelectModal = document.getElementById('chapterSelectModal');
+  const chModalBadge = document.getElementById('chModalBadge');
+  const chModalTitle = document.getElementById('chModalTitle');
+  const chModalArabic = document.getElementById('chModalArabic');
+  const btnModalLengkap = document.getElementById('btnModalLengkap');
+  const btnModalRingkasan = document.getElementById('btnModalRingkasan');
+  const btnModalExpandSubtopics = document.getElementById('btnModalExpandSubtopics');
+  const btnCloseChModal = document.getElementById('btnCloseChModal');
+  const btnChModeLengkap = document.getElementById('btnChModeLengkap');
+  const btnChModeRingkasan = document.getElementById('btnChModeRingkasan');
+  const chBadgePill = document.getElementById('chBadgePill');
+
+  let modalActiveChapterIdx = 0;
+
+  function openChapterModal(chIdx) {
+    const ch = data.chapters[chIdx];
+    if (!ch) return;
+    modalActiveChapterIdx = chIdx;
+    if (chModalBadge) chModalBadge.textContent = ch.number;
+    if (chModalTitle) chModalTitle.textContent = ch.title;
+    if (chModalArabic) {
+      if (ch.title_ar && ch.title_ar.trim() !== '') {
+        chModalArabic.textContent = ch.title_ar;
+        chModalArabic.style.display = 'block';
+      } else {
+        chModalArabic.textContent = '';
+        chModalArabic.style.display = 'none';
+      }
+    }
+    if (chapterSelectModal) {
+      chapterSelectModal.style.display = 'flex';
+      void chapterSelectModal.offsetWidth;
+      chapterSelectModal.classList.add('show');
+    }
+  }
+
+  function closeChapterModal() {
+    if (!chapterSelectModal) return;
+    chapterSelectModal.classList.remove('show');
+    setTimeout(() => {
+      if (!chapterSelectModal.classList.contains('show')) {
+        chapterSelectModal.style.display = 'none';
+      }
+    }, 250);
+  }
+
+  if (btnCloseChModal) btnCloseChModal.addEventListener('click', closeChapterModal);
+  if (chapterSelectModal) {
+    chapterSelectModal.addEventListener('click', (e) => {
+      if (e.target === chapterSelectModal) closeChapterModal();
+    });
+  }
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && chapterSelectModal && chapterSelectModal.classList.contains('show')) {
+      closeChapterModal();
+    }
+  });
+
+  if (btnModalLengkap) {
+    btnModalLengkap.addEventListener('click', () => {
+      closeChapterModal();
+      navigateTo(modalActiveChapterIdx, 0, 'layer1');
+      if (window.innerWidth <= 900) toggleMobileNav(false);
+    });
+  }
+
+  if (btnModalRingkasan) {
+    btnModalRingkasan.addEventListener('click', () => {
+      closeChapterModal();
+      navigateTo(modalActiveChapterIdx, 0, 'layer2');
+      if (window.innerWidth <= 900) toggleMobileNav(false);
+    });
+  }
+
+  if (btnModalExpandSubtopics) {
+    btnModalExpandSubtopics.addEventListener('click', () => {
+      closeChapterModal();
+      document.querySelectorAll('.chapter-nav-item').forEach(item => item.classList.remove('open'));
+      const activeChElem = document.getElementById(`nav-ch-${modalActiveChapterIdx}`);
+      if (activeChElem) activeChElem.classList.add('open');
+    });
+  }
+
+  if (chBadgePill) {
+    chBadgePill.addEventListener('click', () => {
+      openChapterModal(state.currentChapter);
+    });
+  }
+
+  if (btnChModeLengkap) {
+    btnChModeLengkap.addEventListener('click', () => setLayer('layer1'));
+  }
+  if (btnChModeRingkasan) {
+    btnChModeRingkasan.addEventListener('click', () => setLayer('layer2'));
+  }
   const readerArea = document.getElementById('readerArea');
   const heroCard = document.getElementById('heroCard');
   const readerContainer = document.getElementById('readerContainer');
@@ -115,9 +210,35 @@ document.addEventListener('DOMContentLoaded', () => {
         <span class="chevron-icon">›</span>
       `;
 
+      // Quick Chapter Mode Selector inside accordion
+      const modeLi = document.createElement('li');
+      modeLi.className = 'sidebar-mode-selector-li';
+      modeLi.innerHTML = `
+        <div class="sidebar-mode-pill-bar">
+          <button class="sidebar-pill-btn ${chIdx === state.currentChapter && state.layer === 'layer1' ? 'active' : ''}" data-ch="${chIdx}" data-mode="layer1" title="Buka Versi Penuh Bab Ini">
+            <span>📖</span> <span>Versi Penuh</span>
+          </button>
+          <button class="sidebar-pill-btn ${chIdx === state.currentChapter && state.layer === 'layer2' ? 'active' : ''}" data-ch="${chIdx}" data-mode="layer2" title="Buka Ringkasan Bab Ini">
+            <span>⚡</span> <span>Ringkasan</span>
+          </button>
+        </div>
+      `;
+
+      modeLi.querySelectorAll('.sidebar-pill-btn').forEach(pill => {
+        pill.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const targetMode = pill.getAttribute('data-mode');
+          navigateTo(chIdx, 0, targetMode);
+          if (window.innerWidth <= 900) {
+            toggleMobileNav(false);
+          }
+        });
+      });
+
       // Subtopics Container
       const subUl = document.createElement('ul');
       subUl.className = 'subtopic-list';
+      subUl.appendChild(modeLi);
 
       ch.subtopics.forEach((sub, sIdx) => {
         const subLi = document.createElement('li');
@@ -141,13 +262,20 @@ document.addEventListener('DOMContentLoaded', () => {
         subUl.appendChild(subLi);
       });
 
-      headerBtn.addEventListener('click', () => {
-        // Toggle open/close accordion
-        const isOpen = li.classList.contains('open');
-        document.querySelectorAll('.chapter-nav-item').forEach(item => item.classList.remove('open'));
-        if (!isOpen) {
-          li.classList.add('open');
+      headerBtn.addEventListener('click', (e) => {
+        // Jika klik chevron sahaja: toggle open/close accordion
+        if (e.target.closest('.chevron-icon')) {
+          e.stopPropagation();
+          const isOpen = li.classList.contains('open');
+          document.querySelectorAll('.chapter-nav-item').forEach(item => item.classList.remove('open'));
+          if (!isOpen) {
+            li.classList.add('open');
+          }
+          return;
         }
+
+        // Apabila pengguna tekan tajuk bab: Beri option Versi Penuh vs Ringkasan!
+        openChapterModal(chIdx);
       });
 
       li.appendChild(headerBtn);
@@ -262,6 +390,21 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
     document.getElementById('subtopicMainTitle').textContent = sub.title;
+
+    // Sync banner chapter mode tabs
+    if (btnChModeLengkap && btnChModeRingkasan) {
+      btnChModeLengkap.classList.toggle('active', state.layer === 'layer1');
+      btnChModeRingkasan.classList.toggle('active', state.layer === 'layer2');
+      btnChModeLengkap.setAttribute('aria-selected', state.layer === 'layer1');
+      btnChModeRingkasan.setAttribute('aria-selected', state.layer === 'layer2');
+    }
+
+    // Sync sidebar mode pills
+    document.querySelectorAll('.sidebar-pill-btn').forEach(pill => {
+      const pCh = parseInt(pill.getAttribute('data-ch'), 10);
+      const pMode = pill.getAttribute('data-mode');
+      pill.classList.toggle('active', pCh === state.currentChapter && pMode === state.layer);
+    });
 
     // Active layer indicator text
     const modeBadge = document.getElementById('activeModeBadge');
@@ -1004,6 +1147,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     layerBtnLengkap.setAttribute('aria-selected', layerName === 'layer1');
     layerBtnRingkasan.setAttribute('aria-selected', layerName === 'layer2');
+
+    // Sync banner chapter mode tabs
+    if (btnChModeLengkap && btnChModeRingkasan) {
+      btnChModeLengkap.classList.toggle('active', layerName === 'layer1');
+      btnChModeRingkasan.classList.toggle('active', layerName === 'layer2');
+      btnChModeLengkap.setAttribute('aria-selected', layerName === 'layer1');
+      btnChModeRingkasan.setAttribute('aria-selected', layerName === 'layer2');
+    }
+
+    // Sync sidebar mode pills
+    document.querySelectorAll('.sidebar-pill-btn').forEach(pill => {
+      const pCh = parseInt(pill.getAttribute('data-ch'), 10);
+      const pMode = pill.getAttribute('data-mode');
+      pill.classList.toggle('active', pCh === state.currentChapter && pMode === layerName);
+    });
 
     renderContent();
     let toastText = 'Mod Paparan: Versi Penuh';

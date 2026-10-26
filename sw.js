@@ -1,4 +1,4 @@
-const CACHE_NAME = 'alawaiq-v32-update-p5-bab2sub2-20261027';
+const CACHE_NAME = 'alawaiq-v33-update-p4-bab2sub2-20261027';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

@@ -397,6 +397,13 @@ document.addEventListener('DOMContentLoaded', () => {
       btnChModeRingkasan.classList.toggle('active', state.layer === 'layer2');
       btnChModeLengkap.setAttribute('aria-selected', state.layer === 'layer1');
       btnChModeRingkasan.setAttribute('aria-selected', state.layer === 'layer2');
+      
+      const ringkasanLabelEl = btnChModeRingkasan.querySelector('.mode-label');
+      if (ringkasanLabelEl) {
+        ringkasanLabelEl.textContent = 'Ringkasan Subtopik';
+      }
+      btnChModeRingkasan.title = `Buka Ringkasan & Fiqh Haraki: Subtopik ${state.currentSubtopic + 1}`;
+      btnChModeLengkap.title = `Buka Versi Penuh: Subtopik ${state.currentSubtopic + 1}`;
     }
 
     // Sync sidebar mode pills
@@ -409,9 +416,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // Active layer indicator text
     const modeBadge = document.getElementById('activeModeBadge');
     const subFnCount = (sub.footnotes && sub.footnotes.length > 0) ? sub.footnotes.length : 0;
+    const subDisplayNumber = state.currentSubtopic + 1;
+    let cleanSubTitleForBadge = sub.title;
+    if (cleanSubTitleForBadge.includes('Pengenalan & Permulaan:')) {
+      cleanSubTitleForBadge = 'Pengenalan & Permulaan Bab';
+    }
+    const shortBadgeSubTitle = cleanSubTitleForBadge.length > 32 ? cleanSubTitleForBadge.substring(0, 30) + '...' : cleanSubTitleForBadge;
+    
     modeBadge.textContent = state.layer === 'layer1' 
       ? `Versi Lengkap (${sub.paragraphs ? sub.paragraphs.length : 0} Perenggan${subFnCount > 0 ? ` & ${subFnCount} Nota Kaki` : ''})` 
-      : 'Ringkasan Eksklusif (Layer 2 - Fiqh Haraki & Intipati)';
+      : `Ringkasan Subtopik ${subDisplayNumber}: ${shortBadgeSubTitle}`;
 
     // Update bookmark status
     updateBookmarkBtnStatus();
@@ -717,13 +731,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let finalHtml = formattedLines.join('\n');
 
+        const subDisplayNumber = state.currentSubtopic + 1;
+        let displaySubTitle = sub.title;
+        if (displaySubTitle.includes('Pengenalan & Permulaan:')) {
+          displaySubTitle = 'Pengenalan & Permulaan Bab';
+        }
+        const cleanChName = ch.title.replace(/^BAB\s+\d+:\s*/i, '').replace(/^MUKADIMAH:\s*/i, '').trim();
+
         summaryBox.innerHTML = `
           <div class="summary-card" style="background: rgba(190, 18, 60, 0.08); border: 1px solid rgba(251, 113, 133, 0.25); border-radius: 14px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.25);">
-            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; border-bottom: 1px solid rgba(251, 113, 133, 0.2); padding-bottom: 0.85rem;">
-              <span style="font-size: 1.6rem;">⚡</span>
-              <div>
-                <h3 style="margin: 0; color: var(--gold-light); font-size: 1.15rem; font-family: 'Outfit', sans-serif;">INTISARI &amp; FIQH HARAKI: ${ch.title}</h3>
-                <small style="color: var(--sapphire-light); font-weight: 500;">${ch.number} — Fiqh Tarbiah &amp; Radar Halangan Dakwah</small>
+            <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 1.15rem; border-bottom: 1px solid rgba(251, 113, 133, 0.2); padding-bottom: 0.95rem;">
+              <span style="font-size: 1.8rem; line-height: 1.1;">⚡</span>
+              <div style="flex: 1;">
+                <div style="display: inline-flex; align-items: center; gap: 6px; margin-bottom: 5px;">
+                  <span style="background: rgba(212, 175, 55, 0.18); color: var(--gold-light, #f5c542); font-size: 0.76rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; letter-spacing: 0.5px; border: 1px solid rgba(212, 175, 55, 0.35);">
+                    ${ch.number ? ch.number.toUpperCase() : 'BAB'} • SUBTOPIK ${subDisplayNumber}
+                  </span>
+                </div>
+                <h3 style="margin: 0; color: var(--gold-light, #f5c542); font-size: 1.2rem; font-family: 'Outfit', sans-serif; font-weight: 700; line-height: 1.4;">
+                  INTISARI &amp; FIQH HARAKI: SUBTOPIK ${subDisplayNumber} — ${displaySubTitle.toUpperCase()}
+                </h3>
+                <small style="color: var(--sapphire-light, #7dd3fc); font-weight: 500; font-size: 0.86rem; display: block; margin-top: 5px;">
+                  ${ch.number}: ${cleanChName} — Fiqh Tarbiah &amp; Radar Halangan Dakwah
+                </small>
               </div>
             </div>
             <div style="color: var(--text-main); font-size: 0.98rem;">

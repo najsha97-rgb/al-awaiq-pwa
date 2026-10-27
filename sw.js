@@ -1,4 +1,4 @@
-const CACHE_NAME = 'alawaiq-v39-clean-bab22-headings-20261027';
+const CACHE_NAME = 'alawaiq-v40-clean-bab21-headings-20261027';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

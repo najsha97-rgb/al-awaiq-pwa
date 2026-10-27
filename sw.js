@@ -1,4 +1,4 @@
-const CACHE_NAME = 'alawaiq-v42-clean-bab19-heading-20261027';
+const CACHE_NAME = 'alawaiq-v43-clean-all-leaked-headers-20261027';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

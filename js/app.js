@@ -246,9 +246,9 @@ document.addEventListener('DOMContentLoaded', () => {
         subBtn.className = `subtopic-nav-btn ${chIdx === state.currentChapter && sIdx === state.currentSubtopic ? 'active-sub' : ''}`;
         subBtn.innerHTML = `
           <span class="subtopic-num">${sIdx + 1}.</span>
-          <span class="subtopic-title-text">${sub.title}</span>
+          <span class="subtopic-title-text">${sub.menu_title || sub.title}</span>
         `;
-        subBtn.title = sub.title;
+        subBtn.title = sub.menu_title || sub.title;
 
         subBtn.addEventListener('click', (e) => {
           e.stopPropagation();

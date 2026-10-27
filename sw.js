@@ -1,4 +1,4 @@
-const CACHE_NAME = 'alawaiq-v48-clean-all-sambungan-notices-20261027';
+const CACHE_NAME = 'alawaiq-v49-update-30-suluhan-cahaya-20261028';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

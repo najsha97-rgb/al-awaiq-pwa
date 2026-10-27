@@ -1,4 +1,4 @@
-window.ALAWAIQ_DATA = {
+const ALAWAIQ_DATA = {
   "metadata": {
     "title": "Al-Awaiq (العوائق)",
     "subtitle": "Batu-batu Penghalang di Sepanjang Jalan Dakwah Harakah Islamiyah",
@@ -5490,7 +5490,7 @@ window.ALAWAIQ_DATA = {
       "cid": "bab22",
       "number": "Bab 22",
       "title": "BAB 22: ORANG-ORANG PILIHAN... TANPA BERMEGAH!",
-      "title_ar": "أَخْيَارٌ... وَلَا فَخْرَ!",
+      "title_ar": "أَخْيَارٌ... وَلَا فَخْرَ!‏",
       "total_subtopics": 14,
       "total_paragraphs": 177,
       "subtopics": [

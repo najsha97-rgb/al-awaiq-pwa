@@ -1,4 +1,4 @@
-const CACHE_NAME = 'alawaiq-v51-format-arabic-commas-20261028';
+const CACHE_NAME = 'alawaiq-v52-fix-mutiara-hikmah-227-20261028';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

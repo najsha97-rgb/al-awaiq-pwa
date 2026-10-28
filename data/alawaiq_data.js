@@ -8,13 +8,13 @@ const ALAWAIQ_DATA = {
     "layers": {
       "layer1": "Versi Penuh Terjemahan Lengkap",
       "layer2": "Ringkasan & Intisari Ilmiah Berstruktur",
-      "layer3": "220 Mutiara Kata Hikmah & Fiqh Haraki"
+      "layer3": "227 Mutiara Kata Hikmah & Fiqh Haraki"
     },
     "total_chapters": 24,
     "total_subtopics": 122,
     "total_paragraphs": 2245,
     "total_footnotes": 211,
-    "total_quotes": 0,
+    "total_quotes": 227,
     "last_updated": "2026-10-26"
   },
   "chapters": [
@@ -5685,3 +5685,5 @@ const ALAWAIQ_DATA = {
     }
   ]
 };
+if (typeof window !== 'undefined') window.ALAWAIQ_DATA = ALAWAIQ_DATA;
+if (typeof module !== 'undefined' && module.exports) module.exports = ALAWAIQ_DATA;

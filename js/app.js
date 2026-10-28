@@ -1604,23 +1604,32 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!cardEl) return;
 
     const item = allHikmahQuotes[currentFeaturedHikmahIndex] || allHikmahQuotes[0];
+    if (!item) return;
+
+    const chIdx = (typeof item.chapterIndex === 'number') ? item.chapterIndex : (Math.max(0, (item.chapter_id || 1) - 1));
+    const sIdx = (typeof item.subtopicIndex === 'number') ? item.subtopicIndex : 0;
+    const chNum = item.chapterNumber || (data.chapters[chIdx] ? data.chapters[chIdx].number : 'Bab');
+    const chTitle = item.chapterTitle || (data.chapters[chIdx] ? data.chapters[chIdx].title : '');
+    const subTitle = item.subtopicTitle || (data.chapters[chIdx] && data.chapters[chIdx].subtopics[sIdx] ? data.chapters[chIdx].subtopics[sIdx].title : 'Topik');
+    const speaker = item.speaker || item.tokoh || 'Tokoh Hikmah';
+    const quoteText = item.quote || (item.arabic ? `« ${item.arabic} »\n\n“${item.translation || ''}”\n\n⚔️ Fiqh Haraki: ${item.dimensi || ''}` : '');
 
     cardEl.innerHTML = `
       <div class="hikmah-hero-header">
         <div class="hikmah-tag-group">
           <span class="hikmah-hero-badge">💎 MUTIARA HIKMAH PILIHAN</span>
-          <span class="hikmah-speaker-pill">👤 ${item.speaker}</span>
+          <span class="hikmah-speaker-pill">👤 ${speaker}</span>
         </div>
         <span style="font-size: 0.8rem; color: var(--gold-light); font-weight: 600;">#${currentFeaturedHikmahIndex + 1} daripada ${allHikmahQuotes.length}</span>
       </div>
 
       <div class="hikmah-hero-quote">
-        ${formatHikmahQuote(item.quote)}
+        ${formatHikmahQuote(quoteText)}
       </div>
 
       <div class="hikmah-hero-source">
         <span>📚 Sumber:</span>
-        <strong>${item.chapterNumber} — ${item.chapterTitle} (${item.subtopicTitle})</strong>
+        <strong>${chNum} — ${chTitle} (${subTitle})</strong>
       </div>
 
       <div class="hikmah-actions-row">
@@ -1642,7 +1651,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Action button listeners
     const btnNext = cardEl.querySelector('#btnNextRandomHikmah');
     if (btnNext) {
-      btnNext.addEventListener('click', () => {
+      btnNext.addEventListener('click', (e) => {
+        e.stopPropagation();
         let nextIdx = Math.floor(Math.random() * allHikmahQuotes.length);
         if (nextIdx === currentFeaturedHikmahIndex && allHikmahQuotes.length > 1) {
           nextIdx = (nextIdx + 1) % allHikmahQuotes.length;
@@ -1654,15 +1664,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const btnCopy = cardEl.querySelector('#btnCopyFeaturedHikmah');
     if (btnCopy) {
-      btnCopy.addEventListener('click', () => {
+      btnCopy.addEventListener('click', (e) => {
+        e.stopPropagation();
         copyHikmahToClipboard(item);
       });
     }
 
     const btnRead = cardEl.querySelector('#btnReadChapterFeatured');
     if (btnRead) {
-      btnRead.addEventListener('click', () => {
-        navigateTo(item.chapterIndex, item.subtopicIndex);
+      btnRead.addEventListener('click', (e) => {
+        e.stopPropagation();
+        navigateTo(chIdx, sIdx);
         setLayer('layer1');
       });
     }
@@ -1672,7 +1684,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return allHikmahQuotes.filter(item => {
       // 1. Search query match
       if (hikmahSearchQuery) {
-        const textToSearch = `${item.speaker} ${item.quote} ${item.chapterNumber} ${item.chapterTitle} ${item.subtopicTitle}`.toLowerCase();
+        const textToSearch = `${item.speaker || item.tokoh || ''} ${item.quote || ''} ${item.arabic || ''} ${item.translation || ''} ${item.chapterNumber || ''} ${item.chapterTitle || ''} ${item.subtopicTitle || ''}`.toLowerCase();
         if (!textToSearch.includes(hikmahSearchQuery)) {
           return false;
         }
@@ -1716,18 +1728,28 @@ document.addEventListener('DOMContentLoaded', () => {
     filtered.forEach(item => {
       const card = document.createElement('div');
       card.className = 'hikmah-card';
+      
+      const chIdx = (typeof item.chapterIndex === 'number') ? item.chapterIndex : (Math.max(0, (item.chapter_id || 1) - 1));
+      const sIdx = (typeof item.subtopicIndex === 'number') ? item.subtopicIndex : 0;
+      const chNum = item.chapterNumber || (data.chapters[chIdx] ? data.chapters[chIdx].number : 'Bab');
+      const subTitle = item.subtopicTitle || (data.chapters[chIdx] && data.chapters[chIdx].subtopics[sIdx] ? data.chapters[chIdx].subtopics[sIdx].title : 'Topik');
+      const subDisplay = (subTitle && subTitle.length > 22) ? subTitle.substring(0, 20) + '..' : (subTitle || '');
+      const speaker = item.speaker || item.tokoh || 'Tokoh Hikmah';
+      const quoteId = item.id || `q_${item.number || ''}`;
+      const quoteText = item.quote || (item.arabic ? `« ${item.arabic} »\n\n“${item.translation || ''}”\n\n⚔️ Fiqh Haraki: ${item.dimensi || ''}` : '');
+
       card.innerHTML = `
         <div>
           <div class="hikmah-card-top">
-            <span class="hikmah-card-speaker">👤 ${item.speaker}</span>
-            <span class="hikmah-card-index">#${item.id}</span>
+            <span class="hikmah-card-speaker">👤 ${speaker}</span>
+            <span class="hikmah-card-index">#${quoteId}</span>
           </div>
           <div class="hikmah-card-body">
-            ${formatHikmahQuote(item.quote)}
+            ${formatHikmahQuote(quoteText)}
           </div>
         </div>
         <div class="hikmah-card-footer">
-          <span class="hikmah-card-chapter" title="Buka bahagian ini">${item.chapterNumber}: ${item.subtopicTitle.length > 20 ? item.subtopicTitle.substring(0, 18) + '..' : item.subtopicTitle}</span>
+          <span class="hikmah-card-chapter" title="Buka bahagian ini">${chNum}: ${subDisplay}</span>
           <div class="hikmah-card-actions">
             <button class="hikmah-card-btn btn-copy-card" title="Salin kata hikmah ini">
               <span>📋</span>
@@ -1742,20 +1764,32 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
 
       // Copy listener
-      card.querySelector('.btn-copy-card').addEventListener('click', () => {
-        copyHikmahToClipboard(item);
-      });
+      const copyBtn = card.querySelector('.btn-copy-card');
+      if (copyBtn) {
+        copyBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          copyHikmahToClipboard(item);
+        });
+      }
 
       // Read Chapter listener
-      card.querySelector('.btn-read-card').addEventListener('click', () => {
-        navigateTo(item.chapterIndex, item.subtopicIndex);
-        setLayer('layer1');
-      });
+      const readBtn = card.querySelector('.btn-read-card');
+      if (readBtn) {
+        readBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          navigateTo(chIdx, sIdx);
+          setLayer('layer1');
+        });
+      }
 
-      card.querySelector('.hikmah-card-chapter').addEventListener('click', () => {
-        navigateTo(item.chapterIndex, item.subtopicIndex);
-        setLayer('layer1');
-      });
+      const chBtn = card.querySelector('.hikmah-card-chapter');
+      if (chBtn) {
+        chBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          navigateTo(chIdx, sIdx);
+          setLayer('layer1');
+        });
+      }
 
       gridEl.appendChild(card);
     });
@@ -1764,27 +1798,37 @@ document.addEventListener('DOMContentLoaded', () => {
   function formatHikmahQuote(text) {
     if (!text) return '';
     let formatted = text;
-    // Highlight Arabic quotation brackets « ... » only if it contains Arabic
+    // Highlight Arabic quotation brackets « ... » with distinct upright Arabic styling
     formatted = formatted.replace(/«\s*(.*?)\s*»/g, (match, p1) => {
       const arCount = (p1.match(/[\u0600-\u06FF]/g) || []).length;
       const latCount = (p1.match(/[a-zA-Z]/g) || []).length;
       if (arCount > 0 && arCount >= latCount) {
-        return `<span class="ar-quote" dir="rtl" style="font-style: normal !important; transform: none !important; font-family: 'Amiri', serif;">« ${p1} »</span>`;
+        return `<span class="ar-quote" dir="rtl" style="font-style: normal !important; transform: none !important; font-family: 'Amiri', serif; font-size: 1.15em; line-height: 1.8; display: block; margin-bottom: 0.65rem; color: var(--gold-light);">« ${p1} »</span>`;
       }
       return `« ${p1} »`;
     });
     // Highlight Malay / English quoted speech “...”
-    formatted = formatted.replace(/“\s*(.*?)\s*”/g, '<strong style="color: var(--gold-light);">“$1”</strong>');
+    formatted = formatted.replace(/“\s*(.*?)\s*”/g, '<strong style="color: var(--text-main); font-weight: 500; display: block; margin-bottom: 0.5rem; line-height: 1.6;">“$1”</strong>');
+    // Convert double newlines into clean paragraph spacing
+    formatted = formatted.replace(/\n\n/g, '<div style="margin-top: 0.65rem;"></div>');
     return formatted;
   }
 
   function copyHikmahToClipboard(item) {
+    const chIdx = (typeof item.chapterIndex === 'number') ? item.chapterIndex : (Math.max(0, (item.chapter_id || 1) - 1));
+    const sIdx = (typeof item.subtopicIndex === 'number') ? item.subtopicIndex : 0;
+    const speaker = item.speaker || item.tokoh || 'Tokoh Hikmah';
+    const chNum = item.chapterNumber || (data.chapters[chIdx] ? data.chapters[chIdx].number : 'Bab');
+    const chTitle = item.chapterTitle || (data.chapters[chIdx] ? data.chapters[chIdx].title : '');
+    const subTitle = item.subtopicTitle || (data.chapters[chIdx] && data.chapters[chIdx].subtopics[sIdx] ? data.chapters[chIdx].subtopics[sIdx].title : 'Topik');
+    const quoteText = item.quote || (item.arabic ? `« ${item.arabic} »\n\n“${item.translation || ''}”\n\n⚔️ Fiqh Haraki: ${item.dimensi || ''}` : '');
+
     const textToCopy = `💎 ${allHikmahQuotes.length} MUTIARA KATA\n(Hadis Nabi SAW + Tokoh & Pejuang)\n` +
-      `👤 ${item.speaker}\n` +
+      `👤 ${speaker}\n` +
       `━━━━━━━━━━━━━━━━━━━\n\n` +
-      `"${item.quote}"\n\n` +
-      `📚 Sumber: ${item.chapterNumber} — ${item.chapterTitle}\n` +
-      `📑 Topik: ${item.subtopicTitle}\n` +
+      `${quoteText}\n\n` +
+      `📚 Sumber: ${chNum} — ${chTitle}\n` +
+      `📑 Topik: ${subTitle}\n` +
       `🌟 Kitab Al-Awaiq — Syeikh Muhammad Ahmad Ar-Rasyid\n` +
       `🌐 https://najsha97-rgb.github.io/al-awaiq-pwa/`;
 

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'alawaiq-v67-modal-overlay-fix';
+const CACHE_NAME = 'alawaiq-v68-modal-close-fix';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

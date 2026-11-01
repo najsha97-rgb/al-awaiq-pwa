@@ -240,6 +240,9 @@
         <button class="layer-btn" id="btnLayerHikmah" role="tab" aria-selected="false">
           💎 <span>Mutiara Hikmah</span>
         </button>
+        <button class="layer-btn" id="btnHeaderPeradaban" role="tab" aria-selected="false" title="Wawasan Ummah Fadhilah &amp; Kuasa Watan">
+          🌍 <span>Ummah Fadhilah &amp; PBI</span>
+        </button>
       </div>
 
       <button class="icon-btn" id="themeToggleBtn" title="Tukar Tema (Gelap/Cerah)" aria-label="Tukar Tema">
@@ -270,6 +273,17 @@
         </div>
         <span class="hikmah-promo-badge">Rawak</span>
       </div>
+
+      <!-- Quick Access: Wawasan Ummah Fadhilah & PBI (Dokumen Am & Khas) -->
+      <div class="sidebar-peradaban-promo" id="sidebarPeradabanBtn" role="button" tabindex="0" title="Buka Wawasan Ummah Fadhilah &amp; Peradaban Baru Islam">
+        <div class="peradaban-promo-icon">🌍</div>
+        <div class="peradaban-promo-info">
+          <span class="peradaban-promo-title">Ummah Fadhilah &amp; PBI</span>
+          <span class="peradaban-promo-sub">Sumbangan Al-‘Awā’iq &amp; 4 Fail Rasmi</span>
+        </div>
+        <span class="peradaban-promo-badge">Muat Turun</span>
+      </div>
+
 
       <!-- Navigation Tree -->
       <ul class="chapter-nav-list" id="chapterNavList">
@@ -405,6 +419,175 @@
       <div class="ch-modal-footer">
         <button class="ch-modal-subtopics-btn" id="btnModalExpandSubtopics" type="button">
           <span>📑</span> <span>Lihat Senarai Subtopik Bab</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= PERADABAN & UMMAH FADHILAH SPOTLIGHT MODAL ================= -->
+  <div class="peradaban-modal-overlay" id="modalPeradabanSpotlight" style="display: none;">
+    <div class="peradaban-modal-box">
+      <div class="peradaban-modal-header">
+        <div class="peradaban-modal-badge">🌍 WAWASAN 100 TAHUN KEDUA (PBI)</div>
+        <button class="icon-btn tarbiah-modal-close" id="btnClosePeradabanModal" aria-label="Tutup">✕</button>
+      </div>
+      <h3 class="peradaban-modal-title">Ummah Fadhilah &amp; Peradaban Baru Islam</h3>
+      <p class="peradaban-modal-subtitle">Sumbangan Kitab Al-‘Awā’iq (As-Syeikh Muhammad Ahmad al-Rasyid) Sebagai Sistem Radar Haraki &amp; Pengurusan Risiko</p>
+
+      <!-- Pautan Fail Dokumen Sedia Digunakan (Word & PDF) -->
+      <div class="peradaban-download-panel">
+        <div class="download-panel-title">📥 Pautan Fail Dokumen Sedia Digunakan:</div>
+        
+        <!-- Bahagian 1: Dokumen Pengenalan Am -->
+        <div style="font-size:0.75rem; color:#93c5fd; font-weight:700; margin: 4px 0 6px 0; letter-spacing:0.3px;">
+          📌 DOKUMEN PENGENALAN AM (GAGASAN UMMAH FADHILAH &amp; TETRALOGI):
+        </div>
+        <div class="download-buttons-group">
+          <a href="./Gagasan_Ummah_Fadhilah_Kuasa_Nasional_dan_Tetralogi_Al-Rasyid.docx" download class="peradaban-doc-btn docx-btn">
+            <span class="doc-icon">📄</span>
+            <div class="doc-info">
+              <span class="doc-main-text">Dokumen Am Word (.docx)</span>
+              <span class="doc-sub-text">Pengenalan Am Gagasan (42 KB)</span>
+            </div>
+          </a>
+          <a href="./Gagasan_Ummah_Fadhilah_Kuasa_Nasional_dan_Tetralogi_Al-Rasyid.pdf" target="_blank" class="peradaban-doc-btn pdf-btn">
+            <span class="doc-icon">📕</span>
+            <div class="doc-info">
+              <span class="doc-main-text">Dokumen Am PDF (.pdf)</span>
+              <span class="doc-sub-text">Format E-Buku Sedia Cetak (886 KB)</span>
+            </div>
+          </a>
+        </div>
+
+        <!-- Bahagian 2: Dokumen Khas Al-‘Awā’iq -->
+        <div style="font-size:0.75rem; color:var(--gold-light); font-weight:700; margin: 10px 0 6px 0; letter-spacing:0.3px;">
+          💎 DOKUMEN KHAS AL-‘AWĀ’IQ (SUMBANGAN DALAM KUASA WATAN):
+        </div>
+        <div class="download-buttons-group">
+          <a href="./Sumbangan_Al_Awaiq_Dalam_Ummah_Fadhilah_Kuasa_Nasional_dan_PBI.docx" download class="peradaban-doc-btn docx-btn">
+            <span class="doc-icon">📄</span>
+            <div class="doc-info">
+              <span class="doc-main-text">Dokumen Khas Word (.docx)</span>
+              <span class="doc-sub-text">Sumbangan Al-‘Awā’iq (39 KB)</span>
+            </div>
+          </a>
+          <a href="./Sumbangan_Al_Awaiq_Dalam_Ummah_Fadhilah_Kuasa_Nasional_dan_PBI.pdf" target="_blank" class="peradaban-doc-btn pdf-btn">
+            <span class="doc-icon">📕</span>
+            <div class="doc-info">
+              <span class="doc-main-text">Dokumen Khas PDF (.pdf)</span>
+              <span class="doc-sub-text">Format E-Buku Sedia Cetak (4.3 MB)</span>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="peradaban-modal-body">
+        <!-- 1. Kedudukan Strategik -->
+        <div class="peradaban-card-highlight">
+          <div class="peradaban-card-header">
+            <span class="peradaban-card-icon">🛡️</span>
+            <div>
+              <h4 style="margin:0; font-size:1.05rem; color:var(--gold-light);">Kedudukan Al-‘Awā’iq dalam Strategi Peradaban</h4>
+              <span style="font-size:0.75rem; color:#93c5fd;">Sistem Kekebalan Haraki &amp; Pengurusan Risiko Kuasa Watan</span>
+            </div>
+          </div>
+          <p class="peradaban-desc-text">
+            Kitab <strong>Al-‘Awā’iq</strong> (Batu-Batu Penghalang di Sepanjang Jalan Dakwah) berfungsi sebagai sistem radar keselamatan dan pengurusan risiko haraki (<em>haraki risk management</em>). Syeikh al-Rasyid mengibaratkan kitab ini seperti papan tanda isyarat merah di lebuh raya dakwah bagi memberi amaran terhadap selekoh maut dan jerangkap kebinasaan.
+          </p>
+          <p class="peradaban-desc-text" style="color:#cbd5e1; margin-top:0.5rem;">
+            Dalam proses membina Kuasa Nasional, ancaman paling bahaya sering kali bukan daripada musuh luar, tetapi daripada keretakan dalaman, perebutan jawatan, ego keilmuan, dan takwil politik yang menyeleweng.
+          </p>
+        </div>
+
+        <!-- 2. Lima Teras Al-‘Awā’iq -->
+        <h4 style="color:var(--gold-light); margin:0.5rem 0 0.25rem 0; font-size:1rem; display:flex; align-items:center; gap:6px;">
+          <span>📌</span> <span>Lima Teras Sumbangan Al-‘Awā’iq dalam Kuasa Watan</span>
+        </h4>
+
+        <!-- Teras 1 -->
+        <div class="peradaban-pillar-card">
+          <div class="tarbiah-pillar-header">
+            <span class="tarbiah-pillar-icon">🤝</span>
+            <div class="tarbiah-pillar-titles">
+              <h4>1. Membina Kelompok Sehati Sejiwa (Bab 1)</h4>
+              <span class="tarbiah-pillar-tag">Zumrat al-Qalb al-Wāḥid</span>
+            </div>
+          </div>
+          <p class="peradaban-desc-text">
+            Konsep kelompok sehati sejiwa berasaskan hadis <em>al-ghurabā'</em> yang membaiki kerosakan manusia pada akhir zaman. Menegaskan bahawa kekuatan Ummah Fadhilah tidak terletak pada ramainya bilangan semata-mata, tetapi pada ikatan hati yang bersih daripada hasad dengki dan persaingan kuasa (Tonggak 5: Kesatuan Ummah).
+          </p>
+        </div>
+
+        <!-- Teras 2 -->
+        <div class="peradaban-pillar-card">
+          <div class="tarbiah-pillar-header">
+            <span class="tarbiah-pillar-icon">⚠️</span>
+            <div class="tarbiah-pillar-titles">
+              <h4>2. Membongkar Takwil yang Memperdaya (Bab 3)</h4>
+              <span class="tarbiah-pillar-tag">Al-Ta'wīl al-Mustadraj</span>
+            </div>
+          </div>
+          <p class="peradaban-desc-text">
+            Memberi amaran keras terhadap proses memperdayakan diri dengan mencari dalil syarak ganjil semata-mata untuk menghalalkan kompromi prinsip demi survival politik sementara. Menjadi benteng integriti agar kepimpinan Kuasa Nasional tidak menjual prinsip akidah di meja rundingan.
+          </p>
+        </div>
+
+        <!-- Teras 3 -->
+        <div class="peradaban-pillar-card">
+          <div class="tarbiah-pillar-header">
+            <span class="tarbiah-pillar-icon">🏹</span>
+            <div class="tarbiah-pillar-titles">
+              <h4>3. Merawat Rantaian Aib Diri &amp; Panah Syaitan (Bab 4 &amp; 5)</h4>
+              <span class="tarbiah-pillar-tag">Salāsil al-‘Uyūb</span>
+            </div>
+          </div>
+          <p class="peradaban-desc-text">
+            Keaiban moral yang dibiarkan tanpa rawatan akan menjadi rantai belenggu yang melumpuhkan daya juang kader. Membina imuniti rohani agar aktivis kebal daripada panah fitnah syaitan tatkala berhadapan ujian harta dan kemewahan.
+          </p>
+        </div>
+
+        <!-- Teras 4 -->
+        <div class="peradaban-pillar-card">
+          <div class="tarbiah-pillar-header">
+            <span class="tarbiah-pillar-icon">⚔️</span>
+            <div class="tarbiah-pillar-titles">
+              <h4>4. Keperajuritan &amp; Menundukkan Ego Fakih (Bab 8, 21 &amp; 22)</h4>
+              <span class="tarbiah-pillar-tag">Merawat Ghurūr al-Faqīh</span>
+            </div>
+          </div>
+          <p class="peradaban-desc-text">
+            Mengingatkan wasiat Saidina Umar RA bahawa jawatan kepimpinan adalah amanah hisab yang berat, bukan trofi kemegahan. Membongkar bahaya ego keilmuan yang melahirkan pertelagahan, serta merawatnya agar ulama dan teknokrat bersatu memimpin watan (Tonggak 2: Kepimpinan Berwibawa).
+          </p>
+        </div>
+
+        <!-- Teras 5 -->
+        <div class="peradaban-pillar-card">
+          <div class="tarbiah-pillar-header">
+            <span class="tarbiah-pillar-icon">🌱</span>
+            <div class="tarbiah-pillar-titles">
+              <h4>5. Kebangkitan Kader yang Tersadung (Bab 21)</h4>
+              <span class="tarbiah-pillar-tag">Nahḍat al-‘Āthir &amp; Fiqh Istidrāk</span>
+            </div>
+          </div>
+          <p class="peradaban-desc-text">
+            Fiqh tarbiah matang: tidak membuang kader yang tergelincir melakukan kesilapan kecil, sebaliknya memulihkannya melalui proses penilaian dan pembetulan yang berhikmah.
+          </p>
+        </div>
+
+        <!-- Kunci Amal Pejuang -->
+        <div class="peradaban-card-highlight" style="border-color: rgba(234, 179, 8, 0.4); background: rgba(30, 27, 46, 0.7);">
+          <h4 style="margin:0 0 0.5rem 0; font-size:0.95rem; color:var(--gold-light);">🔑 Kunci Amal Pejuang Membina Ummah Fadhilah:</h4>
+          <ul style="margin:0; padding-left:1.2rem; font-size:0.83rem; line-height:1.6; color:#e2e8f0;">
+            <li><strong>Waspadai takwil hawa nafsu:</strong> Jangan menghalalkan kompromi prinsip di sebalik nama 'kebijaksanaan siasah' atau 'maslahat dakwah'.</li>
+            <li><strong>Pelihara kesucian hati:</strong> Buang sifat hasad dengki, pertelagahan kabilah haraki, dan persaingan merebut kuasa.</li>
+            <li><strong>Bimbing saudara tersadung:</strong> Pulihkan rakan seperjuangan dengan hikmah; jangan biarkan mereka menjadi mangsa fitnah musuh.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tarbiah-modal-footer">
+        <button class="peradaban-close-footer-btn" id="btnPeradabanModalCloseFooter" type="button">
+          Tutup Paparan
         </button>
       </div>
     </div>

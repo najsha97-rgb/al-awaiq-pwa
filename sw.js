@@ -1,4 +1,4 @@
-const CACHE_NAME = 'alawaiq-v24-cahaya-menu-clean-20261028';
+const CACHE_NAME = 'alawaiq-cache-v62-ummah-pbi';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

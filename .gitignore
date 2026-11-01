@@ -7,3 +7,9 @@ Thumbs.db
 pdf/
 *.pdf
 *.docx
+
+# Benarkan fail dokumen rasmi Gagasan Ummah Fadhilah & Sumbangan Al-Awaiq dimuat naik
+!Gagasan_Ummah_Fadhilah_Kuasa_Nasional_dan_Tetralogi_Al-Rasyid.docx
+!Gagasan_Ummah_Fadhilah_Kuasa_Nasional_dan_Tetralogi_Al-Rasyid.pdf
+!Sumbangan_Al_Awaiq_Dalam_Ummah_Fadhilah_Kuasa_Nasional_dan_PBI.docx
+!Sumbangan_Al_Awaiq_Dalam_Ummah_Fadhilah_Kuasa_Nasional_dan_PBI.pdf

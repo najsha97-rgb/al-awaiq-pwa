@@ -1,4 +1,4 @@
-const CACHE_NAME = 'alawaiq-cache-v63-wawasan-pbi';
+const CACHE_NAME = 'alawaiq-cache-v64-wawasan-3lajur';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

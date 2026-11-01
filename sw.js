@@ -1,4 +1,4 @@
-const CACHE_NAME = 'alawaiq-v69-quotes-restored';
+const CACHE_NAME = 'alawaiq-v70-harmonise-pbi';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

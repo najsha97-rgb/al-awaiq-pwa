@@ -1,3 +1,19 @@
+// === Global Early Modal Trigger Helpers ===
+window.openPeradabanModal = window.openPeradabanModal || function() {
+  const m = document.getElementById('modalPeradabanSpotlight');
+  if (m) {
+    m.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+};
+window.togglePeradabanModal = window.togglePeradabanModal || function(show) {
+  const m = document.getElementById('modalPeradabanSpotlight');
+  if (m) {
+    m.style.display = show ? 'flex' : 'none';
+    document.body.style.overflow = show ? 'hidden' : '';
+  }
+};
+
 /**
  * AL-AWAIQ PWA - CORE LOGIC
  * Halangan-Halangan Dakwah - Syeikh Muhammad Ahmad Ar-Rasyid
@@ -1891,6 +1907,66 @@ document.addEventListener('DOMContentLoaded', () => {
 
     return out;
   }
+
+  // === Open / Close Peradaban Spotlight Modal (Ummah Fadhilah & PBI) ===
+  function togglePeradabanModal(show) {
+    const modal = document.getElementById('modalPeradabanSpotlight');
+    if (!modal) return;
+    modal.style.display = show ? 'flex' : 'none';
+    document.body.style.overflow = show ? 'hidden' : '';
+    if (show && typeof state !== 'undefined' && state.mobileNavOpen) {
+      if (typeof toggleMobileNav === 'function') {
+        try { toggleMobileNav(false); } catch (e) { toggleMobileNav(); }
+      }
+    }
+  }
+  window.openPeradabanModal = () => togglePeradabanModal(true);
+  window.togglePeradabanModal = togglePeradabanModal;
+
+  const peradabanSidebarTrigger = document.getElementById('sidebarPeradabanBtn');
+  if (peradabanSidebarTrigger) {
+    peradabanSidebarTrigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      togglePeradabanModal(true);
+    });
+  }
+  const peradabanHeaderTrigger = document.getElementById('btnHeaderPeradaban');
+  if (peradabanHeaderTrigger) {
+    peradabanHeaderTrigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      togglePeradabanModal(true);
+    });
+  }
+  const peradabanCloseX = document.getElementById('btnClosePeradabanModal');
+  if (peradabanCloseX) {
+    peradabanCloseX.addEventListener('click', (e) => {
+      e.preventDefault();
+      togglePeradabanModal(false);
+    });
+  }
+  const peradabanCloseFooter = document.getElementById('btnPeradabanModalCloseFooter');
+  if (peradabanCloseFooter) {
+    peradabanCloseFooter.addEventListener('click', (e) => {
+      e.preventDefault();
+      togglePeradabanModal(false);
+    });
+  }
+  const peradabanModalEl = document.getElementById('modalPeradabanSpotlight');
+  if (peradabanModalEl) {
+    peradabanModalEl.addEventListener('click', (e) => {
+      if (e.target === peradabanModalEl) togglePeradabanModal(false);
+    });
+  }
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      const modal = document.getElementById('modalPeradabanSpotlight');
+      if (modal && modal.style.display === 'flex') {
+        togglePeradabanModal(false);
+      }
+    }
+  });
+
+
 
   // Initial Boot
   renderSidebar();

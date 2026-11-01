@@ -1,4 +1,4 @@
-const CACHE_NAME = 'alawaiq-v68-modal-close-fix';
+const CACHE_NAME = 'alawaiq-v69-quotes-restored';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

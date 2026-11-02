@@ -1756,14 +1756,14 @@ document.addEventListener('DOMContentLoaded', () => {
       const subTitle = item.subtopicTitle || (data.chapters[chIdx] && data.chapters[chIdx].subtopics[sIdx] ? data.chapters[chIdx].subtopics[sIdx].title : 'Topik');
       const subDisplay = (subTitle && subTitle.length > 22) ? subTitle.substring(0, 20) + '..' : (subTitle || '');
       const speaker = item.speaker || item.tokoh || 'Tokoh Hikmah';
-      const quoteId = item.id || `q_${item.number || ''}`;
+      const quoteNum = item.number || (typeof item.id === 'string' ? item.id.replace(/^q_/, '') : item.id) || '';
       const quoteText = item.quote || (item.arabic ? `« ${item.arabic} »\n\n“${item.translation || ''}”\n\n⚔️ Fiqh Haraki: ${item.dimensi || ''}` : '');
 
       card.innerHTML = `
         <div>
           <div class="hikmah-card-top">
             <span class="hikmah-card-speaker">👤 ${speaker}</span>
-            <span class="hikmah-card-index">#${quoteId}</span>
+            <span class="hikmah-card-index">#${quoteNum}</span>
           </div>
           <div class="hikmah-card-body">
             ${formatHikmahQuote(quoteText)}

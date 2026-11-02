@@ -1,4 +1,4 @@
-const CACHE_NAME = 'alawaiq-v71-hikmah-amiri-vocalised';
+const CACHE_NAME = 'alawaiq-v72-badge-format-sync';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

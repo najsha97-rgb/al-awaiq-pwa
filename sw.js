@@ -1,4 +1,4 @@
-const CACHE_NAME = 'alawaiq-v73-single-y-sync';
+const CACHE_NAME = 'alawaiq-v74-pengecualian-dbp';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

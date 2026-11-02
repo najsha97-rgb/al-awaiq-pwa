@@ -1,4 +1,4 @@
-const CACHE_NAME = 'alawaiq-v72-badge-format-sync';
+const CACHE_NAME = 'alawaiq-v73-single-y-sync';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

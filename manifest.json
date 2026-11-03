@@ -1,7 +1,7 @@
 {
   "name": "Al-Awaiq | Halangan-Halangan Dakwah",
   "short_name": "Al-Awaiq",
-  "description": "Aplikasi Digital Al-‘Awā’iq (العوائق) - Halangan-Halangan Dakwah Harakah Islamiyah karya As-Syeikh Muhammad Ahmad Ar-Rasyid",
+  "description": "Aplikasi PWA Al-Awaiq (العَـوَائِق) - Batu-Batu Penghalang & Fiqh Mengatasi Rintangan di Sepanjang Jalan Dakwah Harakah Islamiyah karya As-Syeikh Muhammad Ahmad ar-Rasyid rahimahullah.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0f172a",

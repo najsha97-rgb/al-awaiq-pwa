@@ -1,4 +1,4 @@
-const CACHE_NAME = 'alawaiq-v75-tamayyuz-tasayyub';
+const CACHE_NAME = 'alawaiq-v76-batu-penghalang-preview';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
